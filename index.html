@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aqib Javed Shoes</title>
+<style>
+body{margin:0;font-family:Arial;background:#f5f5f5;color:#111}.top{background:#111;color:#fff;padding:18px;text-align:center}.top h1{margin:0}.hero{padding:55px 20px;text-align:center;background:#222;color:white}.hero h2{font-size:38px;margin:5px}.btn{display:inline-block;background:#fff;color:#111;padding:13px 25px;border-radius:25px;text-decoration:none;font-weight:bold;margin-top:15px}section{padding:35px 5%}.title{text-align:center;font-size:30px;margin-bottom:25px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}.card{background:#fff;border-radius:15px;overflow:hidden;box-shadow:0 3px 15px #0002}.card img{width:100%;height:220px;object-fit:cover}.info{padding:15px}.price{font-size:20px;font-weight:bold}.old{text-decoration:line-through;color:#999;font-size:13px}.buy{width:100%;border:0;background:#111;color:white;padding:12px;border-radius:9px;margin-top:12px;font-weight:bold}.order{background:white;max-width:600px;margin:auto;padding:25px;border-radius:15px}.order input,.order select{width:100%;padding:13px;margin:7px 0;border:1px solid #ddd;border-radius:8px;box-sizing:border-box}.wa{background:#159447}.cart{position:fixed;bottom:15px;left:15px;background:#e63946;color:#fff;padding:14px 20px;border-radius:30px;font-weight:bold}.cartbox{display:none;position:fixed;inset:0;background:#0008;z-index:5}.panel{background:white;width:min(500px,90%);margin:5% auto;padding:25px;border-radius:15px}.close{float:left;border:0;background:#eee;border-radius:50%;font-size:20px}.item{padding:10px 0;border-bottom:1px solid #ddd}footer{background:#111;color:#fff;text-align:center;padding:25px}
+</style>
+</head>
+<body>
+<div class="top"><h1>AQIB JAVED SHOES</h1><small>Premium Shoes Store</small></div>
+<div class="hero"><h2>اپنا اسٹائل، اپنی پہچان 👟</h2><p>Stylish shoes — گھر بیٹھے آرڈر کریں</p><a class="btn" href="#shop">Shopping شروع کریں</a></div>
+
+<section id="shop"><h2 class="title">🔥 ہماری Collection</h2><div class="grid" id="products"></div></section>
+
+<section><h2 class="title">📦 Order Details</h2><div class="order">
+<input id="name" placeholder="آپ کا نام">
+<input id="phone" placeholder="آپ کا موبائل نمبر">
+<input id="address" placeholder="مکمل Delivery Address">
+<select id="size"><option value="">Shoe Size منتخب کریں</option><option>40</option><option>41</option><option>42</option><option>43</option><option>44</option></select>
+<button class="buy wa" onclick="sendOrder()">WhatsApp پر Order کریں</button>
+</div></section>
+
+<div class="cart" onclick="openCart()">🛒 Cart (<span id="count">0</span>)</div>
+<div class="cartbox" id="cartbox"><div class="panel"><button class="close" onclick="closeCart()">×</button><h2>🛒 آپ کی Cart</h2><div id="items"></div><h3>Total: Rs. <span id="total">0</span></h3></div></div>
+
+<footer>© 2026 Aqib Javed Shoes<br><br>WhatsApp: 03432752543</footer>
+
+<script>
+const p=[
+["Air Runner Red",3999,"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"],
+["Classic White",3499,"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=700&q=80"],
+["Street Black",4299,"https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=700&q=80"],
+["Urban Comfort",3799,"https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=700&q=80"],
+["Sport Pro",4599,"https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=700&q=80"],
+["Premium Shoes",4999,"https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=700&q=80"]
+];
+let cart=[];
+document.getElementById("products").innerHTML=p.map((x,i)=>`<div class="card"><img src="${x[2]}"><div class="info"><h3>${x[0]}</h3><p>Premium quality • Comfortable</p><div class="price">Rs. ${x[1]}</div><button class="buy" onclick="add(${i})">Add to Cart</button></div></div>`).join("");
+function add(i){let x=cart.find(a=>a.i===i);x?x.q++:cart.push({i,q:1});update()}
+function update(){document.getElementById("count").textContent=cart.reduce((a,x)=>a+x.q,0);document.getElementById("items").innerHTML=cart.length?cart.map(x=>`<div class="item">${p[x.i][0]} × ${x.q} — Rs. ${p[x.i][1]*x.q}</div>`).join(""):"Cart خالی ہے";document.getElementById("total").textContent=cart.reduce((a,x)=>a+p[x.i][1]*x.q,0)}
+function openCart(){document.getElementById("cartbox").style.display="block"}function closeCart(){document.getElementById("cartbox").style.display="none"}
+function sendOrder(){if(!cart.length){alert("پہلے کوئی جوتا Cart میں شامل کریں۔");return}let n=document.getElementById("name").value,ph=document.getElementById("phone").value,a=document.getElementById("address").value,s=document.getElementById("size").value;if(!n||!ph||!a||!s){alert("براہ کرم تمام معلومات مکمل کریں۔");return}let products=cart.map(x=>p[x.i][0]+" x"+x.q).join(", ");let msg=`السلام علیکم، Aqib Javed Shoes سے Order ہے۔%0Aنام: ${encodeURIComponent(n)}%0Aنمبر: ${encodeURIComponent(ph)}%0Aپتہ: ${encodeURIComponent(a)}%0ASize: ${encodeURIComponent(s)}%0AProducts: ${encodeURIComponent(products)}%0ATotal: Rs. ${document.getElementById("total").textContent}`;window.open("https://wa.me/923432752543?text="+msg,"_blank")}
+update();
+</script>
+</body>
+</html>
